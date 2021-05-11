@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -22,9 +23,12 @@ public class QuoteController {
     }
 
     @PostMapping
-    public ResponseEntity<Quote> saveQuote(@RequestBody Quote quote) {
+    public ResponseEntity<Quote> saveQuote(@RequestBody @Valid Quote quote) {
         return ResponseEntity.ok(quoteService.saveQuote(quote));
     }
 
-
+    @DeleteMapping
+    public void deleteAllQuotes() {
+        quoteService.deleteAllQuotes();
+    }
 }

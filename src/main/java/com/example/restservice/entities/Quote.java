@@ -1,19 +1,33 @@
 package com.example.restservice.entities;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
 @Data
-@Table(name = "quotes")
+@Table
+@RequiredArgsConstructor
 public class Quote {
+
+    public Quote(String isin, Double bid, double ask) {
+        this.isin = isin;
+        this.bid = bid;
+        this.ask = ask;
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
+    @NotEmpty(message = "Not empty")
+    @Size(min = 12, max = 12)
     private String isin;
 
     @Column

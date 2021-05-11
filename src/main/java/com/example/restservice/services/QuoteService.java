@@ -11,4 +11,6 @@ public interface QuoteService {
     List<Quote> getAllQuotes();
 
     Double getElvl(String isin) throws IsinNotFoundException;
+
+    void deleteAllQuotes();
 }

@@ -30,6 +30,11 @@ public class QuoteServiceImpl implements QuoteService {
         return quote.getElvl().getElvl();
     }
 
+    @Override
+    public void deleteAllQuotes() {
+        quoteRepository.deleteAll();
+    }
+
     private Quote calculateElvl(Quote quote) {
         List<Quote> quoteList = quoteRepository.findAll();
         boolean isBaseContainsQuote = quoteList.contains(quote);
@@ -40,12 +45,14 @@ public class QuoteServiceImpl implements QuoteService {
         if (!isBaseContainsQuote) {
             elvl.setElvl(bid);
         } else {
-            Quote quoteWithSameIsinFromBase = quoteList.stream().filter(q -> q.equals(quote)).findFirst().get();
+            Quote quoteWithSameIsinFromBase = quoteList.stream().filter(q -> q.equals(quote)).reduce((q1, q2) -> q2).get();
             double elvlFromQuoteWithSameIsinFromBase = quoteWithSameIsinFromBase.getElvl().getElvl();
             if (ask < elvlFromQuoteWithSameIsinFromBase || bid == null) {
                 quote.getElvl().setElvl(ask);
             } else if (bid > elvlFromQuoteWithSameIsinFromBase) {
                 quote.getElvl().setElvl(bid);
+            } else {
+                quote.getElvl().setElvl(elvlFromQuoteWithSameIsinFromBase);
             }
         }
         return quote;
