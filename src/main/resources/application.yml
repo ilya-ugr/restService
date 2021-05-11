@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: org.h2.Driver
-    url: jdbc:h2:jetbrains://idea/navigate/reference?project=rest-service&path=src/test;
+    url: jdbc:h2:file:~/src/test;
     username: sa
     password:
     h2:
