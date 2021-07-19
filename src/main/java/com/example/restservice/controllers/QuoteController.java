@@ -24,7 +24,12 @@ public class QuoteController {
 
     @PostMapping
     public ResponseEntity<Quote> saveQuote(@RequestBody @Valid Quote quote) {
-        return ResponseEntity.ok(quoteService.saveQuote(quote));
+        Quote responseQuote = quoteService.saveQuote(quote);
+        if (responseQuote != null) {
+            return ResponseEntity.ok(responseQuote);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping

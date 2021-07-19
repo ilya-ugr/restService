@@ -1,14 +1,12 @@
 package com.example.restservice.entities;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @Table
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Elvl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +15,11 @@ public class Elvl {
     @Column
     private double elvl;
 
-    public Elvl(Long id, double elvl) {
-        this.id = id;
+    public void setElvl(double elvl) {
         this.elvl = elvl;
+    }
+
+    public double getElvl() {
+        return elvl;
     }
 }

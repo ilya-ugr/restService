@@ -1,15 +1,14 @@
 package com.example.restservice.entities;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Data
 @Table
 @RequiredArgsConstructor
 public class Quote {
@@ -34,6 +33,7 @@ public class Quote {
     private Double bid;
 
     @Column(nullable = false)
+    @NotNull
     private double ask;
 
     @ManyToOne(cascade = {CascadeType.ALL})
@@ -50,5 +50,25 @@ public class Quote {
     @Override
     public int hashCode() {
         return Objects.hash(isin);
+    }
+
+    public void setElvl(Elvl elvl) {
+        this.elvl = elvl;
+    }
+
+    public String getIsin() {
+        return isin;
+    }
+
+    public Double getBid() {
+        return bid;
+    }
+
+    public double getAsk() {
+        return ask;
+    }
+
+    public Elvl getElvl() {
+        return elvl;
     }
 }
