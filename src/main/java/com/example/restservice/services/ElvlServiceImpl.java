@@ -7,8 +7,8 @@ import com.example.restservice.exceptions.IsinNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,8 +25,6 @@ public class ElvlServiceImpl implements ElvlService {
 
     @Override
     public Map<String, Elvl> getAllElvl() {
-        Set<Quote> setQuotes = quoteRepository.findAll().stream().distinct().collect(Collectors.toSet());
-        Map<String, Elvl> collect = setQuotes.stream().collect(Collectors.toMap(quote -> quote.getIsin(), quote -> quote.getElvl()));
-        return collect;
+        return new HashSet<>(quoteRepository.findAll()).stream().collect(Collectors.toMap(Quote::getIsin, Quote::getElvl));
     }
 }
