@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 @RestController
@@ -24,7 +26,10 @@ public class QuoteController {
 
     @PostMapping
     public ResponseEntity<Quote> saveQuote(@RequestBody @Valid Quote quote) {
+        Lock lock = new ReentrantLock();
+        lock.lock();
         Quote responseQuote = quoteService.saveQuote(quote);
+        lock.unlock();
         if (responseQuote != null) {
             return ResponseEntity.ok(responseQuote);
         } else {

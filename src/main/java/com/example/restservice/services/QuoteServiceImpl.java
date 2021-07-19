@@ -11,8 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 @Validated
 @Service
@@ -36,8 +34,6 @@ public class QuoteServiceImpl implements QuoteService {
     }
 
     private Quote calculateElvl(Quote quote) {
-        Lock lock = new ReentrantLock();
-        lock.lock();
         List<Quote> quoteList = quoteRepository.findAll();
         boolean isBaseContainsQuote = quoteList.contains(quote);
         Double bid = quote.getBid();
@@ -65,7 +61,6 @@ public class QuoteServiceImpl implements QuoteService {
             elvl.setElvl(bid);
             quote.setElvl(elvl);
         }
-        lock.unlock();
         return quote;
     }
 }
